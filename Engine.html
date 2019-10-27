@@ -17,7 +17,7 @@
 <body>
 <script>
   //variaveis do jogo
-  var canvas, ctx, ALTURA, mvDown, mvLeft, mvRight, mvUp, frames = 0, maxPulos = 3,
+  var canvas, ctx, ALTURA, mvLeft = false, mvRight = false, mvUp = false, frames = 0, maxPulos = 3,
   chao = {
       y: 250,
       altura: 50,
@@ -39,11 +39,12 @@
     forcaDoPulo: 8,
     qntPulos: 0,
 
+//posX n foi add a nada
     posX: function(){
       this.x += this.velocidade;
     },
     
-
+//gravidade
     atualiza: function(){
       this.velocidade += this.gravidade;
       this.y += this.velocidade;
@@ -53,7 +54,7 @@
           this.qntPulos = 0;
       }
     },
-
+//pulo
     pula: function(){
       if(this.qntPulos < maxPulos){
         this.velocidade = -this.forcaDoPulo;
@@ -69,6 +70,8 @@
     }
     
   },
+
+  //apartir daqui serão os obstáculos
   mesa1 = {
       y: 238,
       x: 200,
@@ -209,11 +212,13 @@
       cor: "#006400",
 
       movimento: function(){
-       if (this.x < 800){
+       if (this.x <= 800){
          this.x = this.x + 1;
+         
        }
-       else {
-        this.x= 670;
+       if (this.x >= 670){
+         this.x = this.x - 1;
+         
        
        }
   },
@@ -248,14 +253,14 @@
  
   ;
   
-
+  // FUNÇÕES GERAIS
   
   // seta esquerda = 37, seta direita = 39, seta cima = 38, seta baixo = 40,
   function teclaDown (e){ 
     var key = e.keyCode; 
     switch(key){ 
       case 38: mvUp = true; 
-      break;
+      break; 
       case 37: mvLeft = true; 
       break; 
       case 39: mvRight = true; 
@@ -266,22 +271,22 @@
     var key = e.keyCode; 
     switch(key){ 
       case 38: mvUp = false; 
-      break;  
+      break;
       case 37: mvLeft = false; 
       break; 
       case 39: mvRight = false; 
       break; 
     } 
   } 
-  function movimento (){ 
+  function movimento_personagem (){ 
     if (mvUp) { 
       personagem.pula(); 
       }
     if (mvLeft) { 
-      personagem.posX-=3; 
+      personagem.posX-=5; 
       }
     if (mvRight) { 
-      personagem.posX+=3; 
+      personagem.posX+=5; 
       } 
     }
 
@@ -300,8 +305,8 @@
 
     ctx = canvas.getContext("2d");
     document.body.appendChild(canvas);
-    document.addEventListener("keydown",teclaDown);
-    document.addEventListener("keyup",teclaUp);
+    window.addEventListener("keydown",teclaDown);
+    window.addEventListener("keyup",teclaUp);
     
         
 
@@ -312,13 +317,13 @@
     atualiza();
     desenha();
 
-    window.requestAnimationFrame(roda);
+    window.requestAnimationFrame(roda, atualiza);
   }
 
   function atualiza() {
     frames++; 
     personagem.atualiza();
-    movimento();
+    movimento_personagem();
     professor1.movimento();
     professor2.movimento();
     
