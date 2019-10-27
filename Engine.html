@@ -17,7 +17,7 @@
 <body>
 <script>
   //variaveis do jogo
-  var canvas, ctx, ALTURA, frames = 0, maxPulos = 3,
+  var canvas, ctx, ALTURA, mvDown, mvLeft, mvRight, mvUp, frames = 0, maxPulos = 3,
   chao = {
       y: 250,
       altura: 50,
@@ -28,16 +28,24 @@
         ctx.fillRect(0,this.y, LARGURA, this.altura);
       }
   },
-  bloco = {
+  personagem = {
     x: 20,
     y: 250,
-    altura: 10,
+    altura: 15,
     largura: 10,
     cor: "#0000CD",
-    gravidade: 1.5,
+    gravidade: 0.8,
     velocidade: 0,
-    forcaDoPulo: 10,
+    forcaDoPulo: 8,
     qntPulos: 0,
+
+    posX: function(){
+      this.x
+    },
+    
+    posY: function(){
+      this.y
+    },
 
     atualiza: function(){
       this.velocidade += this.gravidade;
@@ -56,31 +64,191 @@
                     
     }
     },
-    moviment: function(){
-      if (keyIsDown(LEFT_ARROW))
-        x-=5;
-
-     if (keyIsDown(RIGHT_ARROW))
-        x+=5;
-
-     if (keyIsDown(UP_ARROW))
-         y-=5;
-
-     if (keyIsDown(DOWN_ARROW))
-       y+=5;
-    },
+    
 
     desenha: function(){
       ctx.fillStyle = this.cor;
       ctx.fillRect(this.x, this.y, this.largura, this.altura);
     }
     
+  },
+  mesa1 = {
+      y: 238,
+      x: 200,
+      altura: 12,
+      largura: 20,
+      cor: "#006400",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  mesa2 = {
+      y: 238,
+      x: 300,
+      altura: 12,
+      largura: 20,
+      cor: "#006400",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  mesa3 = {
+      y: 238,
+      x: 320,
+      altura: 12,
+      largura: 20,
+      cor: "#3CB371	",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  mesa4 = {
+      y: 226,
+      x: 320,
+      altura: 12,
+      largura: 20,
+      cor: "#808000",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  mesa5 = {
+      y: 238,
+      x: 500,
+      altura: 12,
+      largura: 20,
+      cor: "#006400",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  mesa6 = {
+      y: 238,
+      x: 600,
+      altura: 12,
+      largura: 20,
+      cor: "#006400",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  mesa7 = {
+      y: 238,
+      x: 620,
+      altura: 12,
+      largura: 20,
+      cor: "#006400",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  mesa8 = {
+      y: 226,
+      x: 620,
+      altura: 12,
+      largura: 20,
+      cor: "#006400",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  armario1 = {
+      y: 210,
+      x: 400,
+      altura: 40,
+      largura: 25,
+      cor: "#483D8B",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  armario2 = {
+      y: 210,
+      x: 640,
+      altura: 40,
+      largura: 25,
+      cor: "#483D8B",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  ventilador1 = {
+    y: 210,
+      x: 345,
+      altura: 5,
+      largura: 50,
+      cor: "#4F4F4F",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
   };
+  
 
-  function key(event) {
-    bloco.pula();
+  // cima = 32 ("espaço"); direita = 68 ("D"); esquerda = 65 ("A") e baixo = 83 ("S") 
+  // seta esquerda = 37, seta direita = 39, seta cima = 38, seta baixo = 40,
+  function teclaDown (e){ 
+    var key = e.keyCode; 
+    switch(key){ 
+      case 38: mvUp = true; 
+      break; 
+      case 40: mvDown = true; 
+      break; 
+      case 37: mvLeft = true; 
+      break; 
+      case 39: mvRight = true; 
+      break; 
+      } 
+      } 
+  function teclaUp (e){ 
+    var key = e.keyCode; 
+    switch(key){ 
+      case 38: mvUp = false; 
+      break; 
+      case 40: mvDown = false; 
+      break; 
+      case 37: mvLeft = false; 
+      break; 
+      case 39: mvRight = false; 
+      break; 
+    } 
+  } 
+  function move_player (){ 
+    if (mvUp) { 
+      personagem.pula(); 
+      } 
+    if (mvDown) { 
+      personagem.posY+=5; 
+      } 
+    if (mvLeft) { 
+      personagem.posX-=5; 
+      }
+    if (mvRight) { 
+      personagem.posX+=5; 
+      } 
+    }
 
-  }
   function main() {
     ALTURA = window.innerHeight;
     LARGURA = window.innerWidth;
@@ -96,7 +264,10 @@
 
     ctx = canvas.getContext("2d");
     document.body.appendChild(canvas);
-    document.addEventListener("keyIsDown(UP_ARROW)", key);
+    document.addEventListener("keydown",teclaDown);
+    document.addEventListener("keyup",teclaUp);
+    
+        
 
     roda();
   }
@@ -110,7 +281,8 @@
 
   function atualiza() {
     frames++;
-    bloco.atualiza();
+    personagem.atualiza();
+    move_player();
   }
 
   function desenha() {
@@ -118,8 +290,22 @@
     ctx.fillRect(0,0, LARGURA, ALTURA);
 
     chao.desenha();
-    bloco.desenha();
-    bloco.moviment();
+    personagem.desenha();
+    mesa1.desenha();
+    mesa2.desenha();
+    mesa3.desenha();
+    mesa4.desenha();
+    mesa5.desenha();
+    mesa6.desenha();
+    mesa7.desenha();
+    mesa8.desenha();
+  
+    armario1.desenha();
+    armario2.desenha();
+    ventilador1.desenha();
+    
+    
+   
   }
   
   //inicialia o jogo
