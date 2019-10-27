@@ -34,15 +34,10 @@
     altura: 15,
     largura: 10,
     cor: "#0000CD",
-    gravidade: 0.8,
+    gravidade: 0.3,
     velocidade: 0,
-    forcaDoPulo: 8,
+    forcaDoPulo: 3,
     qntPulos: 0,
-
-//posX n foi add a nada
-    posX: function(){
-      this.x += this.velocidade;
-    },
     
 //gravidade
     atualiza: function(){
@@ -69,12 +64,15 @@
       ctx.fillRect(this.x, this.y, this.largura, this.altura);
     }
     
-  },
+  }
+  //movimento
+  
+  ,
 
   //apartir daqui serão os obstáculos
   mesa1 = {
       y: 238,
-      x: 200,
+      x: 100,
       altura: 12,
       largura: 20,
       cor: "#006400",
@@ -86,7 +84,7 @@
   },
   mesa2 = {
       y: 238,
-      x: 300,
+      x: 200,
       altura: 12,
       largura: 20,
       cor: "#006400",
@@ -98,7 +96,7 @@
   },
   mesa3 = {
       y: 238,
-      x: 320,
+      x: 220,
       altura: 12,
       largura: 20,
       cor: "#3CB371	",
@@ -110,7 +108,7 @@
   },
   mesa4 = {
       y: 226,
-      x: 320,
+      x: 220,
       altura: 12,
       largura: 20,
       cor: "#808000",
@@ -122,7 +120,7 @@
   },
   mesa5 = {
       y: 238,
-      x: 500,
+      x: 400,
       altura: 12,
       largura: 20,
       cor: "#006400",
@@ -134,7 +132,7 @@
   },
   mesa6 = {
       y: 238,
-      x: 600,
+      x: 500,
       altura: 12,
       largura: 20,
       cor: "#006400",
@@ -146,7 +144,7 @@
   },
   mesa7 = {
       y: 238,
-      x: 620,
+      x: 520,
       altura: 12,
       largura: 20,
       cor: "#006400",
@@ -158,7 +156,7 @@
   },
   mesa8 = {
       y: 226,
-      x: 620,
+      x: 520,
       altura: 12,
       largura: 20,
       cor: "#006400",
@@ -170,7 +168,7 @@
   },
   armario1 = {
       y: 210,
-      x: 400,
+      x: 300,
       altura: 40,
       largura: 25,
       cor: "#483D8B",
@@ -182,7 +180,7 @@
   },
   armario2 = {
       y: 210,
-      x: 640,
+      x: 540,
       altura: 40,
       largura: 25,
       cor: "#483D8B",
@@ -193,6 +191,30 @@
       }
   },
   ventilador1 = {
+    y: 210,
+      x: 245,
+      altura: 5,
+      largura: 50,
+      cor: "#4F4F4F",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  ventilador2 = {
+    y: 210,
+      x: 50,
+      altura: 5,
+      largura: 50,
+      cor: "#4F4F4F",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  ventilador3 = {
     y: 210,
       x: 345,
       altura: 5,
@@ -206,23 +228,19 @@
   },
   professor1 = {
       y: 226,
-      x: 670,
+      x: 570,
       altura: 12,
       largura: 20,
       cor: "#006400",
 
       movimento: function(){
-       if (this.x <= 800){
+       if (this.x < 650){
          this.x = this.x + 1;
-         
        }
-       if (this.x >= 670){
-         this.x = this.x - 1;
-         
-       
+       else {
+        this.x = 570; 
        }
   },
-
       desenha: function(){
         ctx.fillStyle = this.cor;
         ctx.fillRect(this.x, this.y, this.largura, this.altura);
@@ -230,17 +248,17 @@
   },
   professor2 = {
       y: 226,
-      x: 420,
+      x: 320,
       altura: 12,
       largura: 20,
       cor: "#006400",
 
       movimento: function(){
-       if (this.x < 480){
+       if (this.x < 380){
          this.x = this.x + 1;
        }
        else {
-        this.x= 420;
+        this.x = 320;
        
        }
   },
@@ -283,10 +301,10 @@
       personagem.pula(); 
       }
     if (mvLeft) { 
-      personagem.posX-=5; 
+      personagem.x-=5; 
       }
     if (mvRight) { 
-      personagem.posX+=5; 
+      personagem.x+=5; 
       } 
     }
 
@@ -347,6 +365,8 @@
     armario1.desenha();
     armario2.desenha();
     ventilador1.desenha();
+    ventilador2.desenha();
+    ventilador3.desenha();
     professor1.desenha();
     professor2.desenha();
     
