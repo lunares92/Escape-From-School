@@ -201,9 +201,9 @@
         ctx.fillRect(this.x, this.y, this.largura, this.altura);
       }
   },
-   professor1 = {
+  professor1 = {
       y: 226,
-      x: 680,
+      x: 670,
       altura: 12,
       largura: 20,
       cor: "#006400",
@@ -213,7 +213,7 @@
          this.x = this.x + 1;
        }
        else {
-        this.x= 680;
+        this.x= 670;
        
        }
   },
@@ -222,7 +222,29 @@
         ctx.fillStyle = this.cor;
         ctx.fillRect(this.x, this.y, this.largura, this.altura);
       }
-  }   
+  },
+  professor2 = {
+      y: 226,
+      x: 420,
+      altura: 12,
+      largura: 20,
+      cor: "#006400",
+
+      movimento: function(){
+       if (this.x < 480){
+         this.x = this.x + 1;
+       }
+       else {
+        this.x= 420;
+       
+       }
+  },
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  }
  
   ;
   
@@ -301,10 +323,12 @@
   }
 
   function atualiza() {
-    frames++;
+    frames++; 
     personagem.atualiza();
     movimento();
     professor1.movimento();
+    professor2.movimento();
+    
   }
 
   function desenha() {
@@ -326,6 +350,7 @@
     armario2.desenha();
     ventilador1.desenha();
     professor1.desenha();
+    professor2.desenha();
     
     
    
