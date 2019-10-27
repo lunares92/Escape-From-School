@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="urf=8"/>
+  <title>Escape From School</title>
+  <style type="text/css">
+    canvas{
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      margin: auto;
+  }
+    </style>
+</head>
+<body>
+<script>
+  //variaveis do jogo
+  var canvas, ctx, ALTURA, mvDown, mvLeft, mvRight, mvUp, frames = 0, maxPulos = 3,
+  chao = {
+      y: 250,
+      altura: 50,
+      cor: "#000000",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(0,this.y, LARGURA, this.altura);
+      }
+  },
+  personagem = {
+    x: 20,
+    y: 250,
+    altura: 15,
+    largura: 10,
+    cor: "#0000CD",
+    gravidade: 0.8,
+    velocidade: 0,
+    forcaDoPulo: 8,
+    qntPulos: 0,
+
+    posX: function(){
+      this.x += this.velocidade;
+    },
+    
+
+    atualiza: function(){
+      this.velocidade += this.gravidade;
+      this.y += this.velocidade;
+
+      if(this.y > chao.y - this.altura){
+          this.y = chao.y - this.altura;
+          this.qntPulos = 0;
+      }
+    },
+
+    pula: function(){
+      if(this.qntPulos < maxPulos){
+        this.velocidade = -this.forcaDoPulo;
+        this.qntPulos++;
+                    
+    }
+    },
+    
+
+    desenha: function(){
+      ctx.fillStyle = this.cor;
+      ctx.fillRect(this.x, this.y, this.largura, this.altura);
+    }
+    
+  },
+  mesa1 = {
+      y: 238,
+      x: 200,
+      altura: 12,
+      largura: 20,
+      cor: "#006400",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  mesa2 = {
+      y: 238,
+      x: 300,
+      altura: 12,
+      largura: 20,
+      cor: "#006400",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  mesa3 = {
+      y: 238,
+      x: 320,
+      altura: 12,
+      largura: 20,
+      cor: "#3CB371	",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  mesa4 = {
+      y: 226,
+      x: 320,
+      altura: 12,
+      largura: 20,
+      cor: "#808000",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  mesa5 = {
+      y: 238,
+      x: 500,
+      altura: 12,
+      largura: 20,
+      cor: "#006400",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  mesa6 = {
+      y: 238,
+      x: 600,
+      altura: 12,
+      largura: 20,
+      cor: "#006400",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  mesa7 = {
+      y: 238,
+      x: 620,
+      altura: 12,
+      largura: 20,
+      cor: "#006400",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  mesa8 = {
+      y: 226,
+      x: 620,
+      altura: 12,
+      largura: 20,
+      cor: "#006400",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  armario1 = {
+      y: 210,
+      x: 400,
+      altura: 40,
+      largura: 25,
+      cor: "#483D8B",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  armario2 = {
+      y: 210,
+      x: 640,
+      altura: 40,
+      largura: 25,
+      cor: "#483D8B",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  },
+  ventilador1 = {
+    y: 210,
+      x: 345,
+      altura: 5,
+      largura: 50,
+      cor: "#4F4F4F",
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  }
+ 
+  ;
+  
+
+  
+  // seta esquerda = 37, seta direita = 39, seta cima = 38, seta baixo = 40,
+  function teclaDown (e){ 
+    var key = e.keyCode; 
+    switch(key){ 
+      case 38: mvUp = true; 
+      break; 
+      case 40: mvDown = true; 
+      break; 
+      case 37: mvLeft = true; 
+      break; 
+      case 39: mvRight = true; 
+      break; 
+      } 
+      } 
+  function teclaUp (e){ 
+    var key = e.keyCode; 
+    switch(key){ 
+      case 38: mvUp = false; 
+      break; 
+      case 40: mvDown = false; 
+      break; 
+      case 37: mvLeft = false; 
+      break; 
+      case 39: mvRight = false; 
+      break; 
+    } 
+  } 
+  function movimento (){ 
+    if (mvUp) { 
+      personagem.pula(); 
+      } 
+    if (mvDown) { 
+      personagem.posY+=5; 
+      } 
+    if (mvLeft) { 
+      personagem.posX-=5; 
+      }
+    if (mvRight) { 
+      personagem.posX+=5; 
+      } 
+    }
+
+  function main() {
+    ALTURA = window.innerHeight;
+    LARGURA = window.innerWidth;
+
+    if(LARGURA >=500){
+      LARGURA = 1200;
+      ALTURA = 300;
+    }
+    canvas = document.createElement("canvas");
+    canvas.width = LARGURA;
+    canvas.height = ALTURA;
+    canvas.style.border = "1px solid #000";
+
+    ctx = canvas.getContext("2d");
+    document.body.appendChild(canvas);
+    document.addEventListener("keydown",teclaDown);
+    document.addEventListener("keyup",teclaUp);
+    
+        
+
+    roda();
+  }
+
+  function roda() {
+    atualiza();
+    desenha();
+
+    window.requestAnimationFrame(roda);
+  }
+
+  function atualiza() {
+    frames++;
+    personagem.atualiza();
+    movimento();
+  }
+
+  function desenha() {
+    ctx.fillStyle = "#B22222"
+    ctx.fillRect(0,0, LARGURA, ALTURA);
+
+    chao.desenha();
+    personagem.desenha();
+    mesa1.desenha();
+    mesa2.desenha();
+    mesa3.desenha();
+    mesa4.desenha();
+    mesa5.desenha();
+    mesa6.desenha();
+    mesa7.desenha();
+    mesa8.desenha();
+  
+    armario1.desenha();
+    armario2.desenha();
+    ventilador1.desenha();
+    
+    
+   
+  }
+  
+  //inicialia o jogo
+  main();
+</script>
+</body>
+</html>
