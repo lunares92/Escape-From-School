@@ -200,7 +200,29 @@
         ctx.fillStyle = this.cor;
         ctx.fillRect(this.x, this.y, this.largura, this.altura);
       }
-  }
+  },
+   professor1 = {
+      y: 226,
+      x: 680,
+      altura: 12,
+      largura: 20,
+      cor: "#006400",
+
+      movimento: function(){
+       if (this.x < 800){
+         this.x = this.x + 1;
+       }
+       else {
+        this.x= 680;
+       
+       }
+  },
+
+      desenha: function(){
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.largura, this.altura);
+      }
+  }   
  
   ;
   
@@ -282,6 +304,7 @@
     frames++;
     personagem.atualiza();
     movimento();
+    professor1.movimento();
   }
 
   function desenha() {
@@ -302,6 +325,7 @@
     armario1.desenha();
     armario2.desenha();
     ventilador1.desenha();
+    professor1.desenha();
     
     
    
